@@ -7,54 +7,54 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Filter, Heart, Star, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const categories = ["All", "Suits", "Dresses", "Shirts", "Traditional", "Wedding", "Casual"];
+const categories = ["All", "Kente", "Agbada", "Kaftan", "Suits", "Wedding", "Smock"];
 
 const designs = [
   {
     id: 1,
-    name: "Classic Navy Suit",
-    category: "Suits",
-    price: "$850",
+    name: "Royal Kente Cloth",
+    category: "Kente",
+    price: "GHS 2,800",
     rating: 4.9,
     reviews: 124,
-    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1590735213920-68192a487bc2?w=400&h=500&fit=crop",
     featured: true,
   },
   {
     id: 2,
-    name: "Ivory Wedding Gown",
-    category: "Wedding",
-    price: "$2,400",
+    name: "Grand Agbada Set",
+    category: "Agbada",
+    price: "GHS 3,500",
     rating: 5.0,
     reviews: 89,
-    image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1516826435551-36a8a09e4526?w=400&h=500&fit=crop",
     featured: true,
   },
   {
     id: 3,
-    name: "Silk Evening Dress",
-    category: "Dresses",
-    price: "$650",
+    name: "Kente Wedding Gown",
+    category: "Wedding",
+    price: "GHS 4,200",
     rating: 4.8,
     reviews: 67,
-    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=500&fit=crop",
-    featured: false,
+    image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?w=400&h=500&fit=crop",
+    featured: true,
   },
   {
     id: 4,
-    name: "Bespoke Formal Shirt",
-    category: "Shirts",
-    price: "$180",
+    name: "African Print Suit",
+    category: "Suits",
+    price: "GHS 2,200",
     rating: 4.7,
     reviews: 203,
-    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&h=500&fit=crop",
     featured: false,
   },
   {
     id: 5,
-    name: "Traditional Kaftan",
-    category: "Traditional",
-    price: "$320",
+    name: "Embroidered Kaftan",
+    category: "Kaftan",
+    price: "GHS 1,800",
     rating: 4.9,
     reviews: 156,
     image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400&h=500&fit=crop",
@@ -62,19 +62,19 @@ const designs = [
   },
   {
     id: 6,
-    name: "Charcoal Business Suit",
-    category: "Suits",
-    price: "$920",
+    name: "Northern Smock (Fugu)",
+    category: "Smock",
+    price: "GHS 950",
     rating: 4.8,
     reviews: 98,
-    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop",
     featured: false,
   },
   {
     id: 7,
-    name: "Casual Linen Blazer",
-    category: "Casual",
-    price: "$280",
+    name: "Senator Kaftan",
+    category: "Kaftan",
+    price: "GHS 1,500",
     rating: 4.6,
     reviews: 145,
     image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=400&h=500&fit=crop",
@@ -82,12 +82,32 @@ const designs = [
   },
   {
     id: 8,
-    name: "Bridesmaid Gown",
+    name: "Kente Groomsmen Set",
     category: "Wedding",
-    price: "$450",
+    price: "GHS 2,000",
     rating: 4.9,
     reviews: 78,
-    image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=500&fit=crop",
+    featured: false,
+  },
+  {
+    id: 9,
+    name: "Ashanti Kente Royal",
+    category: "Kente",
+    price: "GHS 3,200",
+    rating: 5.0,
+    reviews: 112,
+    image: "https://images.unsplash.com/photo-1590735213408-9d74a659c672?w=400&h=500&fit=crop",
+    featured: true,
+  },
+  {
+    id: 10,
+    name: "Batakari Traditional",
+    category: "Smock",
+    price: "GHS 800",
+    rating: 4.7,
+    reviews: 89,
+    image: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=400&h=500&fit=crop",
     featured: false,
   },
 ];
@@ -114,7 +134,7 @@ const Designs = () => {
               Design <span className="text-gradient-gold">Gallery</span>
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Explore our collection of exquisite designs. Each piece can be customized to your exact specifications.
+              Explore our collection of authentic Ghanaian designs. From royal kente to elegant agbada, each piece can be customized to your exact specifications.
             </p>
           </div>
         </section>
@@ -230,7 +250,7 @@ const Designs = () => {
               Can't Find What You're Looking For?
             </h2>
             <p className="text-primary-foreground/70 mb-6 max-w-xl mx-auto">
-              We specialize in custom designs. Share your vision with us and we'll bring it to life.
+              We specialize in custom Ghanaian designs. Share your vision with us and we will bring it to life with authentic craftsmanship.
             </p>
             <Link to="/contact">
               <Button variant="gold" size="lg" className="group">
