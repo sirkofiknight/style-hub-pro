@@ -12,6 +12,13 @@ import AdminResetPassword from "./pages/AdminResetPassword";
 import Register from "./pages/Register";
 import Designs from "./pages/Designs";
 import UserDashboard from "./pages/UserDashboard";
+import UserOrders from "./pages/UserOrders";
+import UserAppointments from "./pages/UserAppointments";
+import UserPayments from "./pages/UserPayments";
+import UserDesigns from "./pages/UserDesigns";
+import UserMessages from "./pages/UserMessages";
+import UserNotifications from "./pages/UserNotifications";
+import UserSettings from "./pages/UserSettings";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminOrders from "./pages/AdminOrders";
 import AdminCustomers from "./pages/AdminCustomers";
@@ -43,9 +50,20 @@ const App = () => (
             <Route path="/admin/reset-password" element={<AdminResetPassword />} />
             <Route path="/register" element={<Register />} />
             <Route path="/designs" element={<Designs />} />
+            
+            {/* User Dashboard Routes */}
             <Route path="/dashboard" element={<UserDashboard />} />
             <Route path="/dashboard/measurements" element={<Measurements />} />
             <Route path="/dashboard/measurements/new" element={<MeasurementForm />} />
+            <Route path="/dashboard/orders" element={<UserOrders />} />
+            <Route path="/dashboard/appointments" element={<UserAppointments />} />
+            <Route path="/dashboard/payments" element={<UserPayments />} />
+            <Route path="/dashboard/designs" element={<UserDesigns />} />
+            <Route path="/dashboard/messages" element={<UserMessages />} />
+            <Route path="/dashboard/notifications" element={<UserNotifications />} />
+            <Route path="/dashboard/settings" element={<UserSettings />} />
+            
+            {/* Admin Dashboard Routes */}
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/orders" element={<AdminOrders />} />
             <Route path="/admin/customers" element={<AdminCustomers />} />
@@ -56,6 +74,7 @@ const App = () => (
             <Route path="/admin/appointments" element={<AdminAppointments />} />
             <Route path="/admin/staff" element={<AdminStaff />} />
             <Route path="/admin/reports" element={<AdminReports />} />
+            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
