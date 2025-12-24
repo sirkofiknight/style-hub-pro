@@ -9,6 +9,7 @@ import { CustomersTable } from '@/components/admin/CustomersTable';
 import { useAuth } from '@/hooks/useAuth';
 import { useAdmin } from '@/hooks/useAdmin';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 interface Customer {
   id: string;
@@ -80,6 +81,87 @@ const AdminCustomers = () => {
     }
   }, [user, authLoading, isAdmin, adminLoading, navigate]);
 
+  // Real-time subscriptions
+  useEffect(() => {
+    if (!isAdmin) return;
+
+    // Subscribe to profiles changes
+    const profilesChannel = supabase
+      .channel('admin-customers-profiles')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'profiles'
+        },
+        async (payload) => {
+          console.log('Profile change:', payload);
+          
+          if (payload.eventType === 'INSERT') {
+            const newCustomer = payload.new as Customer;
+            // Fetch order count for new customer
+            const { count } = await supabase
+              .from('orders')
+              .select('*', { count: 'exact', head: true })
+              .eq('user_id', newCustomer.id);
+            
+            setCustomers(prev => [{
+              ...newCustomer,
+              order_count: count || 0
+            }, ...prev]);
+            toast.info(`New customer registered: ${newCustomer.first_name || newCustomer.email || 'New User'}`);
+          } else if (payload.eventType === 'UPDATE') {
+            const updatedCustomer = payload.new as Customer;
+            setCustomers(prev => prev.map(c => 
+              c.id === updatedCustomer.id 
+                ? { ...c, ...updatedCustomer }
+                : c
+            ));
+          } else if (payload.eventType === 'DELETE') {
+            setCustomers(prev => prev.filter(c => c.id !== payload.old.id));
+          }
+        }
+      )
+      .subscribe();
+
+    // Subscribe to orders changes to update order counts
+    const ordersChannel = supabase
+      .channel('admin-customers-orders')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'orders'
+        },
+        async (payload) => {
+          const newRecord = payload.new as { user_id?: string } | null;
+          const oldRecord = payload.old as { user_id?: string } | null;
+          const userId = newRecord?.user_id || oldRecord?.user_id;
+          if (!userId) return;
+
+          // Update order count for the affected customer
+          const { count } = await supabase
+            .from('orders')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', userId);
+
+          setCustomers(prev => prev.map(c => 
+            c.id === userId 
+              ? { ...c, order_count: count || 0 }
+              : c
+          ));
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(profilesChannel);
+      supabase.removeChannel(ordersChannel);
+    };
+  }, [isAdmin]);
+
   if (authLoading || adminLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -128,8 +210,13 @@ const AdminCustomers = () => {
         
         <main className="p-8">
           <div className="mb-8">
-            <h1 className="font-display text-3xl font-bold mb-2">Customers</h1>
-            <p className="text-muted-foreground">View and manage customer accounts</p>
+            <div className="flex items-center gap-3">
+              <h1 className="font-display text-3xl font-bold mb-2">Customers</h1>
+              <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-full animate-pulse">
+                Live
+              </span>
+            </div>
+            <p className="text-muted-foreground">View and manage customer accounts ({customers.length} total)</p>
           </div>
 
           <div className="bg-card rounded-xl border border-border">

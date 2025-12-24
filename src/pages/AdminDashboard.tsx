@@ -10,18 +10,13 @@ import {
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { AdminStats } from '@/components/admin/AdminStats';
 import { OrdersTable } from '@/components/admin/OrdersTable';
 import { useAuth } from '@/hooks/useAuth';
 import { useAdmin } from '@/hooks/useAdmin';
 import { supabase } from '@/integrations/supabase/client';
 import { Order, OrderStatus } from '@/types/orders';
-
-const statusColors: Record<string, string> = {
-  pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-  confirmed: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-};
+import { toast } from 'sonner';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -88,7 +83,6 @@ const AdminDashboard = () => {
     }
 
     if (!adminLoading && !isAdmin && user) {
-      // User is not admin, redirect to user dashboard
       navigate('/dashboard');
       return;
     }
@@ -97,6 +91,84 @@ const AdminDashboard = () => {
       fetchDashboardData();
     }
   }, [user, authLoading, isAdmin, adminLoading, navigate]);
+
+  // Real-time subscriptions
+  useEffect(() => {
+    if (!isAdmin) return;
+
+    // Subscribe to orders changes
+    const ordersChannel = supabase
+      .channel('admin-orders-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'orders'
+        },
+        (payload) => {
+          console.log('Orders change:', payload);
+          
+          if (payload.eventType === 'INSERT') {
+            const newOrder = { ...payload.new, status: payload.new.status as OrderStatus } as Order;
+            setOrders(prev => [newOrder, ...prev].slice(0, 10));
+            toast.info(`New order received: ${payload.new.order_number}`);
+          } else if (payload.eventType === 'UPDATE') {
+            const updatedOrder = { ...payload.new, status: payload.new.status as OrderStatus } as Order;
+            setOrders(prev => prev.map(o => o.id === updatedOrder.id ? updatedOrder : o));
+          } else if (payload.eventType === 'DELETE') {
+            setOrders(prev => prev.filter(o => o.id !== payload.old.id));
+          }
+          
+          // Recalculate monthly revenue on order changes
+          fetchMonthlyRevenue();
+        }
+      )
+      .subscribe();
+
+    // Subscribe to profiles (customers) changes
+    const profilesChannel = supabase
+      .channel('admin-profiles-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'profiles'
+        },
+        (payload) => {
+          console.log('Profiles change:', payload);
+          
+          if (payload.eventType === 'INSERT') {
+            setCustomerCount(prev => prev + 1);
+            toast.info(`New customer registered: ${payload.new.first_name || 'New User'}`);
+          } else if (payload.eventType === 'DELETE') {
+            setCustomerCount(prev => Math.max(0, prev - 1));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(ordersChannel);
+      supabase.removeChannel(profilesChannel);
+    };
+  }, [isAdmin]);
+
+  const fetchMonthlyRevenue = async () => {
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const { data: monthlyOrders } = await supabase
+      .from('orders')
+      .select('amount')
+      .gte('created_at', startOfMonth.toISOString())
+      .in('status', ['completed', 'delivered']);
+
+    const revenue = (monthlyOrders || []).reduce((sum, order) => sum + (order.amount || 0), 0);
+    setMonthlyRevenue(revenue);
+  };
 
   if (authLoading || adminLoading) {
     return (
@@ -142,7 +214,12 @@ const AdminDashboard = () => {
         <main className="p-8">
           {/* Welcome Section */}
           <div className="mb-8">
-            <h1 className="font-display text-3xl font-bold mb-2">Dashboard Overview</h1>
+            <div className="flex items-center gap-3">
+              <h1 className="font-display text-3xl font-bold mb-2">Dashboard Overview</h1>
+              <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-full animate-pulse">
+                Live
+              </span>
+            </div>
             <p className="text-muted-foreground">Welcome back! Here's what's happening in your business today.</p>
           </div>
 
