@@ -15,6 +15,7 @@ import Designs from "./pages/Designs";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import TrackOrder from "./pages/TrackOrder";
 import UserDashboard from "./pages/UserDashboard";
 import UserOrders from "./pages/UserOrders";
 import UserAppointments from "./pages/UserAppointments";
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/track-order" element={<TrackOrder />} />
             
             {/* User Dashboard Routes */}
             <Route path="/dashboard" element={<UserDashboard />} />
