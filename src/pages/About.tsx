@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Award, Users, Clock, Heart, ArrowRight } from "lucide-react";
+import aboutCraftsmanshipImg from "@/assets/about-craftsmanship.jpg";
 
 const stats = [
   { value: "15+", label: "Years of Excellence", icon: Clock },
@@ -68,8 +69,8 @@ const About = () => {
               <div className="relative">
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
                   <img
-                    src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop"
-                    alt="Tailoring craftsmanship"
+                    src={aboutCraftsmanshipImg}
+                    alt="Ghanaian tailoring craftsmanship"
                     className="w-full h-full object-cover"
                   />
                 </div>
