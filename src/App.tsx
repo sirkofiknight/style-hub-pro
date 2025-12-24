@@ -32,6 +32,7 @@ import AdminReports from "./pages/AdminReports";
 import Measurements from "./pages/Measurements";
 import MeasurementForm from "./pages/MeasurementForm";
 import UserNewOrder from "./pages/UserNewOrder";
+import UserBookAppointment from "./pages/UserBookAppointment";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -59,6 +60,7 @@ const App = () => (
             <Route path="/dashboard/orders" element={<UserOrders />} />
             <Route path="/dashboard/orders/new" element={<UserNewOrder />} />
             <Route path="/dashboard/appointments" element={<UserAppointments />} />
+            <Route path="/dashboard/appointments/book" element={<UserBookAppointment />} />
             <Route path="/dashboard/payments" element={<UserPayments />} />
             <Route path="/dashboard/designs" element={<UserDesigns />} />
             <Route path="/dashboard/messages" element={<UserMessages />} />
