@@ -191,6 +191,13 @@ const AdminLogin = () => {
             </Button>
           </form>
 
+          {/* Forgot Password Link */}
+          <div className="text-center">
+            <Link to="/admin/forgot-password" className="text-sm text-slate-400 hover:text-amber-400">
+              Forgot your password?
+            </Link>
+          </div>
+
           {/* Footer */}
           <div className="space-y-4 pt-6 border-t border-slate-800">
             <p className="text-center text-sm text-slate-500">
