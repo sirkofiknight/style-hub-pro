@@ -14,6 +14,147 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          appointment_type: Database["public"]["Enums"]["appointment_type"]
+          assigned_staff: string | null
+          created_at: string
+          customer_email: string | null
+          customer_name: string
+          customer_phone: string | null
+          duration_minutes: number
+          id: string
+          notes: string | null
+          status: Database["public"]["Enums"]["appointment_status"]
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          appointment_type?: Database["public"]["Enums"]["appointment_type"]
+          assigned_staff?: string | null
+          created_at?: string
+          customer_email?: string | null
+          customer_name: string
+          customer_phone?: string | null
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["appointment_status"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          appointment_type?: Database["public"]["Enums"]["appointment_type"]
+          assigned_staff?: string | null
+          created_at?: string
+          customer_email?: string | null
+          customer_name?: string
+          customer_phone?: string | null
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["appointment_status"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      expenses: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string
+          expense_date: string
+          id: string
+          notes: string | null
+          receipt_url: string | null
+          updated_at: string
+          vendor: string | null
+        }
+        Insert: {
+          amount: number
+          category: string
+          created_at?: string
+          created_by?: string | null
+          description: string
+          expense_date?: string
+          id?: string
+          notes?: string | null
+          receipt_url?: string | null
+          updated_at?: string
+          vendor?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          expense_date?: string
+          id?: string
+          notes?: string | null
+          receipt_url?: string | null
+          updated_at?: string
+          vendor?: string | null
+        }
+        Relationships: []
+      }
+      fabrics: {
+        Row: {
+          color: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          material_type: string | null
+          min_quantity_yards: number
+          name: string
+          notes: string | null
+          price_per_yard: number | null
+          quantity_yards: number
+          sku: string | null
+          supplier: string | null
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          material_type?: string | null
+          min_quantity_yards?: number
+          name: string
+          notes?: string | null
+          price_per_yard?: number | null
+          quantity_yards?: number
+          sku?: string | null
+          supplier?: string | null
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          material_type?: string | null
+          min_quantity_yards?: number
+          name?: string
+          notes?: string | null
+          price_per_yard?: number | null
+          quantity_yards?: number
+          sku?: string | null
+          supplier?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       measurements: {
         Row: {
           ankle: number | null
@@ -175,6 +316,53 @@ export type Database = {
           },
         ]
       }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          notes: string | null
+          order_id: string | null
+          payment_date: string
+          payment_method: string
+          payment_status: string
+          transaction_reference: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          notes?: string | null
+          order_id?: string | null
+          payment_date?: string
+          payment_method?: string
+          payment_status?: string
+          transaction_reference?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          notes?: string | null
+          order_id?: string | null
+          payment_date?: string
+          payment_method?: string
+          payment_status?: string
+          transaction_reference?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -205,6 +393,57 @@ export type Database = {
           last_name?: string | null
           phone?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      staff: {
+        Row: {
+          created_at: string
+          email: string | null
+          first_name: string
+          hire_date: string | null
+          hourly_rate: number | null
+          id: string
+          is_active: boolean
+          last_name: string
+          notes: string | null
+          phone: string | null
+          role: string
+          specialty: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          first_name: string
+          hire_date?: string | null
+          hourly_rate?: number | null
+          id?: string
+          is_active?: boolean
+          last_name: string
+          notes?: string | null
+          phone?: string | null
+          role?: string
+          specialty?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          first_name?: string
+          hire_date?: string | null
+          hourly_rate?: number | null
+          id?: string
+          is_active?: boolean
+          last_name?: string
+          notes?: string | null
+          phone?: string | null
+          role?: string
+          specialty?: string | null
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -244,6 +483,18 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      appointment_status:
+        | "pending"
+        | "confirmed"
+        | "completed"
+        | "cancelled"
+        | "no_show"
+      appointment_type:
+        | "measurement"
+        | "fitting"
+        | "consultation"
+        | "pickup"
+        | "other"
       order_status:
         | "pending"
         | "cutting"
@@ -380,6 +631,20 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      appointment_status: [
+        "pending",
+        "confirmed",
+        "completed",
+        "cancelled",
+        "no_show",
+      ],
+      appointment_type: [
+        "measurement",
+        "fitting",
+        "consultation",
+        "pickup",
+        "other",
+      ],
       order_status: [
         "pending",
         "cutting",
