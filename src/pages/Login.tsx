@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Scissors, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,12 +23,16 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate login
-    setTimeout(() => {
+    const { error } = await signIn(formData.email, formData.password);
+    
+    if (error) {
+      toast.error(error.message || "Failed to sign in");
       setIsLoading(false);
-      toast.success("Welcome back! Redirecting to dashboard...");
-      // In a real app, this would redirect after successful auth
-    }, 1500);
+      return;
+    }
+    
+    toast.success("Welcome back!");
+    navigate("/dashboard");
   };
 
   return (
