@@ -37,13 +37,20 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
           <div>
             <h4 className="font-display text-lg font-semibold mb-6">Quick Links</h4>
             <ul className="space-y-3">
-              {["Home", "Designs", "Services", "About", "Contact"].map((item) => (
-                <li key={item}>
+              {[
+                { label: "Home", path: "/" },
+                { label: "Designs", path: "/designs" },
+                { label: "Services", path: "/services" },
+                { label: "Track Order", path: "/track-order" },
+                { label: "About", path: "/about" },
+                { label: "Contact", path: "/contact" },
+              ].map((item) => (
+                <li key={item.label}>
                   <Link
-                    to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                    to={item.path}
                     className="text-primary-foreground/70 hover:text-accent transition-colors text-sm"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
