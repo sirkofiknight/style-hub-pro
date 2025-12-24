@@ -5,12 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Shield, Mail, Lock, Eye, EyeOff, ArrowRight, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
-import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -22,7 +20,11 @@ const AdminLogin = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    const { error } = await signIn(formData.email, formData.password);
+    // Sign in directly with Supabase
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    });
     
     if (error) {
       toast.error(error.message || "Failed to sign in");
@@ -31,12 +33,11 @@ const AdminLogin = () => {
     }
 
     // Check if user is admin
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
+    if (data.user) {
       const { data: roleData } = await supabase
         .from('user_roles')
         .select('role')
-        .eq('user_id', user.id)
+        .eq('user_id', data.user.id)
         .eq('role', 'admin')
         .maybeSingle();
 
@@ -49,7 +50,7 @@ const AdminLogin = () => {
     }
     
     toast.success("Welcome back, Admin!");
-    navigate("/admin");
+    navigate("/admin", { replace: true });
   };
 
   return (
