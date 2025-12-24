@@ -92,7 +92,7 @@
     --secondary-foreground: 40 25% 95%;
 
     --muted: 220 15% 18%;
-    --muted-foreground: 40 20% 60%;
+    --muted-foreground: 40 20% 65%;
 
     --accent: 38 70% 55%;
     --accent-foreground: 220 20% 10%;
@@ -103,6 +103,17 @@
     --border: 220 15% 22%;
     --input: 220 15% 22%;
     --ring: 38 70% 55%;
+
+    /* Custom fashion colors for dark mode */
+    --gold: 38 70% 55%;
+    --gold-light: 38 60% 65%;
+    --gold-dark: 38 80% 40%;
+    --cream: 40 25% 95%;
+    --cream-dark: 40 20% 85%;
+    --charcoal: 220 15% 85%;
+    --charcoal-light: 220 10% 70%;
+    --rose: 350 45% 65%;
+    --sage: 140 25% 65%;
 
     --sidebar-background: 220 18% 12%;
     --sidebar-foreground: 40 25% 95%;
