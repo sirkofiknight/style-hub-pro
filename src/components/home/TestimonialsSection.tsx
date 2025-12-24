@@ -3,23 +3,23 @@ import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Alexandra Chen",
-    role: "Fashion Designer",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
-    content: "The attention to detail is extraordinary. My wedding gown was a masterpiece that exceeded all expectations. Truly bespoke craftsmanship.",
+    name: "Akosua Mensah",
+    role: "Fashion Entrepreneur",
+    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=150&h=150&fit=crop&crop=face",
+    content: "The attention to detail is extraordinary. My kente wedding gown was a masterpiece that exceeded all expectations. Truly bespoke craftsmanship.",
     rating: 5,
   },
   {
-    name: "Marcus Williams",
+    name: "Kwame Asante",
     role: "Business Executive",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    content: "Best investment in my professional wardrobe. The custom suits fit perfectly and the online measurement process was surprisingly accurate.",
+    image: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=150&h=150&fit=crop&crop=face",
+    content: "Best investment in my professional wardrobe. The custom agbada and suits fit perfectly and the measurement process was surprisingly accurate.",
     rating: 5,
   },
   {
-    name: "Sarah Mitchell",
+    name: "Ama Osei",
     role: "Event Planner",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+    image: "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?w=150&h=150&fit=crop&crop=face",
     content: "I've recommended Atelier to all my clients. The tracking system keeps everyone informed and the quality speaks for itself.",
     rating: 5,
   },

@@ -197,8 +197,8 @@ const Login = () => {
               "The craftsmanship and attention to detail is simply unmatched. Every piece is a work of art."
             </p>
             <footer className="text-primary-foreground/70">
-              <span className="font-semibold text-primary-foreground">Michael Ross</span>
-              <span className="block text-sm">Creative Director, Fashion Week</span>
+              <span className="font-semibold text-primary-foreground">Nana Kwame Adjei</span>
+              <span className="block text-sm">CEO, Accra Fashion Week</span>
             </footer>
           </blockquote>
         </div>
