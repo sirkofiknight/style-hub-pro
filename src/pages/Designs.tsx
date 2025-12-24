@@ -7,6 +7,18 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Filter, Heart, Star, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
+// Import generated African fashion images
+import kenteRoyalImg from "@/assets/designs/kente-royal.jpg";
+import agbadaGrandImg from "@/assets/designs/agbada-grand.jpg";
+import kenteWeddingImg from "@/assets/designs/kente-wedding.jpg";
+import africanSuitImg from "@/assets/designs/african-suit.jpg";
+import kaftanEmbroideredImg from "@/assets/designs/kaftan-embroidered.jpg";
+import smockFuguImg from "@/assets/designs/smock-fugu.jpg";
+import senatorKaftanImg from "@/assets/designs/senator-kaftan.jpg";
+import groomsmenKenteImg from "@/assets/designs/groomsmen-kente.jpg";
+import ashantiKenteImg from "@/assets/designs/ashanti-kente.jpg";
+import batakariImg from "@/assets/designs/batakari.jpg";
+
 const categories = ["All", "Kente", "Agbada", "Kaftan", "Suits", "Wedding", "Smock"];
 
 const designs = [
@@ -17,7 +29,7 @@ const designs = [
     price: "GHS 2,800",
     rating: 4.9,
     reviews: 124,
-    image: "https://images.unsplash.com/photo-1590735213920-68192a487bc2?w=400&h=500&fit=crop",
+    image: kenteRoyalImg,
     featured: true,
   },
   {
@@ -27,7 +39,7 @@ const designs = [
     price: "GHS 3,500",
     rating: 5.0,
     reviews: 89,
-    image: "https://images.unsplash.com/photo-1516826435551-36a8a09e4526?w=400&h=500&fit=crop",
+    image: agbadaGrandImg,
     featured: true,
   },
   {
@@ -37,7 +49,7 @@ const designs = [
     price: "GHS 4,200",
     rating: 4.8,
     reviews: 67,
-    image: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?w=400&h=500&fit=crop",
+    image: kenteWeddingImg,
     featured: true,
   },
   {
@@ -47,7 +59,7 @@ const designs = [
     price: "GHS 2,200",
     rating: 4.7,
     reviews: 203,
-    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&h=500&fit=crop",
+    image: africanSuitImg,
     featured: false,
   },
   {
@@ -57,7 +69,7 @@ const designs = [
     price: "GHS 1,800",
     rating: 4.9,
     reviews: 156,
-    image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400&h=500&fit=crop",
+    image: kaftanEmbroideredImg,
     featured: true,
   },
   {
@@ -67,7 +79,7 @@ const designs = [
     price: "GHS 950",
     rating: 4.8,
     reviews: 98,
-    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop",
+    image: smockFuguImg,
     featured: false,
   },
   {
@@ -77,7 +89,7 @@ const designs = [
     price: "GHS 1,500",
     rating: 4.6,
     reviews: 145,
-    image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=400&h=500&fit=crop",
+    image: senatorKaftanImg,
     featured: false,
   },
   {
@@ -87,7 +99,7 @@ const designs = [
     price: "GHS 2,000",
     rating: 4.9,
     reviews: 78,
-    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=500&fit=crop",
+    image: groomsmenKenteImg,
     featured: false,
   },
   {
@@ -97,7 +109,7 @@ const designs = [
     price: "GHS 3,200",
     rating: 5.0,
     reviews: 112,
-    image: "https://images.unsplash.com/photo-1590735213408-9d74a659c672?w=400&h=500&fit=crop",
+    image: ashantiKenteImg,
     featured: true,
   },
   {
@@ -107,7 +119,7 @@ const designs = [
     price: "GHS 800",
     rating: 4.7,
     reviews: 89,
-    image: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=400&h=500&fit=crop",
+    image: batakariImg,
     featured: false,
   },
 ];
