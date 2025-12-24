@@ -14,7 +14,132 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      measurements: {
+        Row: {
+          ankle: number | null
+          arm_hole: number | null
+          back_width: number | null
+          calf: number | null
+          chest: number | null
+          created_at: string
+          height: number | null
+          hips: number | null
+          id: string
+          inseam: number | null
+          is_default: boolean | null
+          knee: number | null
+          measurement_type: string
+          measurement_unit: string
+          neck: number | null
+          notes: string | null
+          outseam: number | null
+          profile_name: string
+          shirt_length: number | null
+          shoulder_width: number | null
+          sleeve_length: number | null
+          thigh: number | null
+          trouser_length: number | null
+          updated_at: string
+          user_id: string
+          waist: number | null
+          weight: number | null
+          wrist: number | null
+        }
+        Insert: {
+          ankle?: number | null
+          arm_hole?: number | null
+          back_width?: number | null
+          calf?: number | null
+          chest?: number | null
+          created_at?: string
+          height?: number | null
+          hips?: number | null
+          id?: string
+          inseam?: number | null
+          is_default?: boolean | null
+          knee?: number | null
+          measurement_type?: string
+          measurement_unit?: string
+          neck?: number | null
+          notes?: string | null
+          outseam?: number | null
+          profile_name?: string
+          shirt_length?: number | null
+          shoulder_width?: number | null
+          sleeve_length?: number | null
+          thigh?: number | null
+          trouser_length?: number | null
+          updated_at?: string
+          user_id: string
+          waist?: number | null
+          weight?: number | null
+          wrist?: number | null
+        }
+        Update: {
+          ankle?: number | null
+          arm_hole?: number | null
+          back_width?: number | null
+          calf?: number | null
+          chest?: number | null
+          created_at?: string
+          height?: number | null
+          hips?: number | null
+          id?: string
+          inseam?: number | null
+          is_default?: boolean | null
+          knee?: number | null
+          measurement_type?: string
+          measurement_unit?: string
+          neck?: number | null
+          notes?: string | null
+          outseam?: number | null
+          profile_name?: string
+          shirt_length?: number | null
+          shoulder_width?: number | null
+          sleeve_length?: number | null
+          thigh?: number | null
+          trouser_length?: number | null
+          updated_at?: string
+          user_id?: string
+          waist?: number | null
+          weight?: number | null
+          wrist?: number | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

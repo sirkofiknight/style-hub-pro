@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Scissors, Mail, Lock, Eye, EyeOff, ArrowRight, User, Phone } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -35,11 +38,19 @@ const Register = () => {
     
     setIsLoading(true);
     
-    // Simulate registration
-    setTimeout(() => {
+    const { error } = await signUp(formData.email, formData.password, {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+    });
+    
+    if (error) {
+      toast.error(error.message || "Failed to create account");
       setIsLoading(false);
-      toast.success("Account created successfully! Please check your email to verify.");
-    }, 1500);
+      return;
+    }
+    
+    toast.success("Account created successfully!");
+    navigate("/dashboard");
   };
 
   return (
