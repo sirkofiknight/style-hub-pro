@@ -30,6 +30,8 @@ import AdminFabrics from "./pages/AdminFabrics";
 import AdminAppointments from "./pages/AdminAppointments";
 import AdminStaff from "./pages/AdminStaff";
 import AdminReports from "./pages/AdminReports";
+import AdminNotifications from "./pages/AdminNotifications";
+import AdminSettings from "./pages/AdminSettings";
 import Measurements from "./pages/Measurements";
 import MeasurementForm from "./pages/MeasurementForm";
 import UserNewOrder from "./pages/UserNewOrder";
@@ -80,6 +82,8 @@ const App = () => (
             <Route path="/admin/appointments" element={<AdminAppointments />} />
             <Route path="/admin/staff" element={<AdminStaff />} />
             <Route path="/admin/reports" element={<AdminReports />} />
+            <Route path="/admin/notifications" element={<AdminNotifications />} />
+            <Route path="/admin/settings" element={<AdminSettings />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

@@ -12,7 +12,11 @@ import {
   LogOut,
   Scissors,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Users,
+  Receipt,
+  BarChart3,
+  UserCog
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -34,15 +38,15 @@ const userLinks = [
 
 const adminLinks = [
   { path: "/admin", icon: LayoutDashboard, label: "Dashboard" },
-  { path: "/admin/customers", icon: Ruler, label: "Customers" },
+  { path: "/admin/customers", icon: Users, label: "Customers" },
   { path: "/admin/orders", icon: ShoppingBag, label: "Orders" },
   { path: "/admin/measurements", icon: Ruler, label: "Measurements" },
   { path: "/admin/payments", icon: CreditCard, label: "Payments" },
-  { path: "/admin/expenses", icon: CreditCard, label: "Expenses" },
+  { path: "/admin/expenses", icon: Receipt, label: "Expenses" },
   { path: "/admin/fabrics", icon: Palette, label: "Fabrics" },
   { path: "/admin/appointments", icon: Calendar, label: "Appointments" },
-  { path: "/admin/staff", icon: Ruler, label: "Staff" },
-  { path: "/admin/reports", icon: Ruler, label: "Reports" },
+  { path: "/admin/staff", icon: UserCog, label: "Staff" },
+  { path: "/admin/reports", icon: BarChart3, label: "Reports" },
 ];
 
 const DashboardSidebar = ({ userType }: SidebarProps) => {
