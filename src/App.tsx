@@ -31,6 +31,7 @@ import AdminStaff from "./pages/AdminStaff";
 import AdminReports from "./pages/AdminReports";
 import Measurements from "./pages/Measurements";
 import MeasurementForm from "./pages/MeasurementForm";
+import UserNewOrder from "./pages/UserNewOrder";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ const App = () => (
             <Route path="/dashboard/measurements" element={<Measurements />} />
             <Route path="/dashboard/measurements/new" element={<MeasurementForm />} />
             <Route path="/dashboard/orders" element={<UserOrders />} />
+            <Route path="/dashboard/orders/new" element={<UserNewOrder />} />
             <Route path="/dashboard/appointments" element={<UserAppointments />} />
             <Route path="/dashboard/payments" element={<UserPayments />} />
             <Route path="/dashboard/designs" element={<UserDesigns />} />

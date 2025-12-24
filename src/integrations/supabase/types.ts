@@ -282,7 +282,7 @@ export type Database = {
           id?: string
           measurement_id?: string | null
           notes?: string | null
-          order_number: string
+          order_number?: string
           status?: Database["public"]["Enums"]["order_status"]
           updated_at?: string
           user_id?: string | null
