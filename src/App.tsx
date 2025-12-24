@@ -12,6 +12,9 @@ import AdminForgotPassword from "./pages/AdminForgotPassword";
 import AdminResetPassword from "./pages/AdminResetPassword";
 import Register from "./pages/Register";
 import Designs from "./pages/Designs";
+import Services from "./pages/Services";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 import UserDashboard from "./pages/UserDashboard";
 import UserOrders from "./pages/UserOrders";
 import UserAppointments from "./pages/UserAppointments";
@@ -56,6 +59,9 @@ const App = () => (
             <Route path="/admin/reset-password" element={<AdminResetPassword />} />
             <Route path="/register" element={<Register />} />
             <Route path="/designs" element={<Designs />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             
             {/* User Dashboard Routes */}
             <Route path="/dashboard" element={<UserDashboard />} />
