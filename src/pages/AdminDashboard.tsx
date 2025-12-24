@@ -1,60 +1,141 @@
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
-  Users, 
-  ShoppingBag, 
-  DollarSign, 
-  TrendingUp, 
-  Calendar, 
-  AlertTriangle,
   ArrowRight,
-  MoreVertical
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import StatCard from "@/components/dashboard/StatCard";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-
-const recentOrders = [
-  { id: "ORD-2024-001", customer: "Alexandra Chen", garment: "Custom Suit", status: "stitching", amount: "$850", tailor: "John M." },
-  { id: "ORD-2024-002", customer: "Michael Ross", garment: "Wedding Dress", status: "cutting", amount: "$1,200", tailor: "Sarah K." },
-  { id: "ORD-2024-003", customer: "Emma Wilson", garment: "Formal Shirt", status: "pending", amount: "$180", tailor: "Unassigned" },
-  { id: "ORD-2024-004", customer: "James Brown", garment: "Kaftan", status: "completed", amount: "$320", tailor: "John M." },
-  { id: "ORD-2024-005", customer: "Lisa Anderson", garment: "Evening Gown", status: "fitting", amount: "$950", tailor: "Sarah K." },
-];
-
-const lowStockFabrics = [
-  { name: "Italian Wool (Navy)", quantity: "8 yards", threshold: "10 yards" },
-  { name: "Silk Blend (Ivory)", quantity: "5 yards", threshold: "8 yards" },
-  { name: "Cotton Twill (White)", quantity: "12 yards", threshold: "15 yards" },
-];
-
-const todayAppointments = [
-  { time: "10:00 AM", customer: "Alexandra Chen", type: "Fitting", status: "confirmed" },
-  { time: "11:30 AM", customer: "David Miller", type: "Measurement", status: "confirmed" },
-  { time: "2:00 PM", customer: "Emma Wilson", type: "Consultation", status: "pending" },
-  { time: "4:00 PM", customer: "Robert Taylor", type: "Pickup", status: "confirmed" },
-];
+  TrendingUp,
+  AlertTriangle,
+  Loader2,
+  ShieldAlert
+} from 'lucide-react';
+import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { AdminStats } from '@/components/admin/AdminStats';
+import { OrdersTable } from '@/components/admin/OrdersTable';
+import { useAuth } from '@/hooks/useAuth';
+import { useAdmin } from '@/hooks/useAdmin';
+import { supabase } from '@/integrations/supabase/client';
+import { Order, OrderStatus } from '@/types/orders';
 
 const statusColors: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
-  cutting: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
-  stitching: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
-  fitting: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
-  completed: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-  delivered: "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400",
-  confirmed: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+  pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
+  confirmed: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
 };
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
+  const { user, profile, loading: authLoading } = useAuth();
+  const { isAdmin, loading: adminLoading } = useAdmin();
+  
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [customerCount, setCustomerCount] = useState(0);
+  const [monthlyRevenue, setMonthlyRevenue] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const fetchDashboardData = async () => {
+    try {
+      // Fetch orders
+      const { data: ordersData, error: ordersError } = await supabase
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      if (ordersError) throw ordersError;
+      
+      // Cast the status to the correct type
+      const typedOrders = (ordersData || []).map(order => ({
+        ...order,
+        status: order.status as OrderStatus,
+      }));
+      setOrders(typedOrders);
+
+      // Fetch customer count
+      const { count: customersCount, error: customersError } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true });
+
+      if (customersError) throw customersError;
+      setCustomerCount(customersCount || 0);
+
+      // Calculate monthly revenue
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const { data: monthlyOrders, error: revenueError } = await supabase
+        .from('orders')
+        .select('amount')
+        .gte('created_at', startOfMonth.toISOString())
+        .in('status', ['completed', 'delivered']);
+
+      if (revenueError) throw revenueError;
+      
+      const revenue = (monthlyOrders || []).reduce((sum, order) => sum + (order.amount || 0), 0);
+      setMonthlyRevenue(revenue);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/login');
+      return;
+    }
+
+    if (!adminLoading && !isAdmin && user) {
+      // User is not admin, redirect to user dashboard
+      navigate('/dashboard');
+      return;
+    }
+
+    if (isAdmin) {
+      fetchDashboardData();
+    }
+  }, [user, authLoading, isAdmin, adminLoading, navigate]);
+
+  if (authLoading || adminLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-accent" />
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <ShieldAlert className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+          <h1 className="text-2xl font-bold mb-2">Access Denied</h1>
+          <p className="text-muted-foreground mb-4">You don't have permission to access this page.</p>
+          <Button onClick={() => navigate('/dashboard')}>
+            Go to Dashboard
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const activeOrders = orders.filter(o => !['completed', 'delivered', 'cancelled'].includes(o.status));
+  const pendingOrders = orders.filter(o => o.status === 'pending');
+
+  const userName = profile 
+    ? [profile.first_name, profile.last_name].filter(Boolean).join(' ') || 'Admin User'
+    : 'Admin User';
+
   return (
     <div className="min-h-screen bg-background">
       <DashboardSidebar userType="admin" />
       
       <div className="ml-64">
         <DashboardHeader 
-          userName="Admin User" 
-          userEmail="admin@atelier.com" 
+          userName={userName}
+          userEmail={profile?.email || user?.email || 'admin@atelier.com'} 
           userType="admin" 
         />
         
@@ -66,37 +147,12 @@ const AdminDashboard = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard
-              title="Total Customers"
-              value="1,247"
-              change="+12% from last month"
-              changeType="positive"
-              icon={Users}
-            />
-            <StatCard
-              title="Active Orders"
-              value="38"
-              change="5 urgent"
-              changeType="neutral"
-              icon={ShoppingBag}
-            />
-            <StatCard
-              title="Monthly Revenue"
-              value="$48,520"
-              change="+23% from last month"
-              changeType="positive"
-              icon={DollarSign}
-              iconColor="bg-gradient-gold"
-            />
-            <StatCard
-              title="Today's Appointments"
-              value="8"
-              change="2 pending confirmation"
-              changeType="neutral"
-              icon={Calendar}
-            />
-          </div>
+          <AdminStats
+            totalCustomers={customerCount}
+            activeOrders={activeOrders.length}
+            monthlyRevenue={monthlyRevenue}
+            pendingOrders={pendingOrders.length}
+          />
 
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Recent Orders */}
@@ -108,103 +164,15 @@ const AdminDashboard = () => {
                 </Link>
               </div>
               
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left text-sm font-medium text-muted-foreground p-4">Order ID</th>
-                      <th className="text-left text-sm font-medium text-muted-foreground p-4">Customer</th>
-                      <th className="text-left text-sm font-medium text-muted-foreground p-4">Garment</th>
-                      <th className="text-left text-sm font-medium text-muted-foreground p-4">Status</th>
-                      <th className="text-left text-sm font-medium text-muted-foreground p-4">Amount</th>
-                      <th className="text-left text-sm font-medium text-muted-foreground p-4"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {recentOrders.map((order) => (
-                      <tr key={order.id} className="border-b border-border last:border-0 hover:bg-secondary/30 transition-colors">
-                        <td className="p-4 font-mono text-sm">{order.id}</td>
-                        <td className="p-4 font-medium">{order.customer}</td>
-                        <td className="p-4 text-muted-foreground">{order.garment}</td>
-                        <td className="p-4">
-                          <Badge className={statusColors[order.status]}>
-                            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                          </Badge>
-                        </td>
-                        <td className="p-4 font-semibold">{order.amount}</td>
-                        <td className="p-4">
-                          <Button variant="ghost" size="icon">
-                            <MoreVertical className="w-4 h-4" />
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <OrdersTable 
+                orders={orders.slice(0, 5)} 
+                loading={loading} 
+                onOrderUpdated={fetchDashboardData} 
+              />
             </div>
 
             {/* Right Column */}
             <div className="space-y-6">
-              {/* Today's Appointments */}
-              <div className="bg-card rounded-xl border border-border p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-display text-lg font-semibold">Today's Schedule</h2>
-                  <Link to="/admin/appointments" className="text-sm text-accent hover:underline">
-                    View all
-                  </Link>
-                </div>
-                
-                <div className="space-y-3">
-                  {todayAppointments.map((apt, index) => (
-                    <div 
-                      key={index}
-                      className="flex items-center justify-between p-3 rounded-lg bg-secondary/30"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="text-sm font-medium text-accent">{apt.time}</div>
-                        <div>
-                          <p className="text-sm font-medium">{apt.customer}</p>
-                          <p className="text-xs text-muted-foreground">{apt.type}</p>
-                        </div>
-                      </div>
-                      <Badge variant="outline" className={statusColors[apt.status]}>
-                        {apt.status}
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Low Stock Alert */}
-              <div className="bg-card rounded-xl border border-border p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <AlertTriangle className="w-5 h-5 text-orange-500" />
-                  <h2 className="font-display text-lg font-semibold">Low Stock Alert</h2>
-                </div>
-                
-                <div className="space-y-3">
-                  {lowStockFabrics.map((fabric, index) => (
-                    <div 
-                      key={index}
-                      className="p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800"
-                    >
-                      <p className="text-sm font-medium">{fabric.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {fabric.quantity} remaining (min: {fabric.threshold})
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <Button variant="outline" className="w-full mt-4">
-                  <Link to="/admin/fabrics" className="flex items-center gap-2">
-                    Manage Inventory
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
-              </div>
-
               {/* Quick Stats */}
               <div className="bg-gradient-gold rounded-xl p-6 text-accent-foreground">
                 <div className="flex items-center gap-2 mb-4">
@@ -213,19 +181,50 @@ const AdminDashboard = () => {
                 </div>
                 <div className="space-y-3">
                   <div className="flex justify-between">
-                    <span className="text-accent-foreground/80">Orders Completed</span>
-                    <span className="font-semibold">47</span>
+                    <span className="text-accent-foreground/80">Total Orders</span>
+                    <span className="font-semibold">{orders.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-accent-foreground/80">New Customers</span>
-                    <span className="font-semibold">23</span>
+                    <span className="text-accent-foreground/80">Active Orders</span>
+                    <span className="font-semibold">{activeOrders.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-accent-foreground/80">Revenue Growth</span>
-                    <span className="font-semibold">+23%</span>
+                    <span className="text-accent-foreground/80">Customers</span>
+                    <span className="font-semibold">{customerCount}</span>
                   </div>
                 </div>
               </div>
+
+              {/* Pending Orders Alert */}
+              {pendingOrders.length > 0 && (
+                <div className="bg-card rounded-xl border border-border p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <AlertTriangle className="w-5 h-5 text-orange-500" />
+                    <h2 className="font-display text-lg font-semibold">Pending Orders</h2>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {pendingOrders.slice(0, 3).map((order) => (
+                      <div 
+                        key={order.id}
+                        className="p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800"
+                      >
+                        <p className="text-sm font-medium">{order.order_number}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {order.customer_name} - {order.garment_type}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button variant="outline" className="w-full mt-4" asChild>
+                    <Link to="/admin/orders" className="flex items-center gap-2">
+                      Manage Orders
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </main>

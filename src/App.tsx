@@ -10,6 +10,8 @@ import Register from "./pages/Register";
 import Designs from "./pages/Designs";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminOrders from "./pages/AdminOrders";
+import AdminCustomers from "./pages/AdminCustomers";
 import Measurements from "./pages/Measurements";
 import MeasurementForm from "./pages/MeasurementForm";
 import NotFound from "./pages/NotFound";
@@ -32,6 +34,8 @@ const App = () => (
             <Route path="/dashboard/measurements" element={<Measurements />} />
             <Route path="/dashboard/measurements/new" element={<MeasurementForm />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/orders" element={<AdminOrders />} />
+            <Route path="/admin/customers" element={<AdminCustomers />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
