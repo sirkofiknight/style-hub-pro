@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { Star, Quote } from "lucide-react";
 
 const testimonials = [
@@ -24,9 +25,9 @@ const testimonials = [
   },
 ];
 
-const TestimonialsSection = () => {
+const TestimonialsSection = forwardRef<HTMLElement>((props, ref) => {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section ref={ref} className="py-24 bg-background relative overflow-hidden" {...props}>
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-50">
         <div className="absolute top-20 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
@@ -85,6 +86,8 @@ const TestimonialsSection = () => {
       </div>
     </section>
   );
-};
+});
+
+TestimonialsSection.displayName = "TestimonialsSection";
 
 export default TestimonialsSection;
