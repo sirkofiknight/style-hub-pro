@@ -12,22 +12,22 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["123 Fashion Avenue", "Design District, NY 10001"],
+    details: ["15 Oxford Street, Osu", "Accra, Ghana"],
   },
   {
     icon: Phone,
     title: "Call Us",
-    details: ["+1 (555) 123-4567", "+1 (555) 987-6543"],
+    details: ["+233 30 277 8899", "+233 24 456 7890"],
   },
   {
     icon: Mail,
     title: "Email Us",
-    details: ["hello@atelier.com", "support@atelier.com"],
+    details: ["hello@atelier.com.gh", "support@atelier.com.gh"],
   },
   {
     icon: Clock,
     title: "Working Hours",
-    details: ["Mon - Fri: 9:00 AM - 7:00 PM", "Sat: 10:00 AM - 5:00 PM"],
+    details: ["Mon - Fri: 8:00 AM - 6:00 PM", "Sat: 9:00 AM - 4:00 PM"],
   },
 ];
 
@@ -111,14 +111,14 @@ const Contact = () => {
                 {/* Map Placeholder */}
                 <div className="aspect-video rounded-xl overflow-hidden bg-secondary border border-border">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.74076794379132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sGoogle!5e0!3m2!1sen!2sus!4v1234567890"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.9924712907847!2d-0.18278968523824!3d5.556027995970!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9084b2b7a773%3A0xbed14ed8650e2dd3!2sOsu%2C%20Accra%2C%20Ghana!5e0!3m2!1sen!2sus!4v1234567890"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Our Location"
+                    title="Our Location - Osu, Accra"
                   />
                 </div>
               </div>
@@ -142,7 +142,7 @@ const Contact = () => {
                         <Label htmlFor="name">Full Name</Label>
                         <Input
                           id="name"
-                          placeholder="John Doe"
+                          placeholder="Kofi Mensah"
                           className="h-12"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -169,7 +169,7 @@ const Contact = () => {
                         <Input
                           id="phone"
                           type="tel"
-                          placeholder="+1 (555) 123-4567"
+                          placeholder="+233 24 123 4567"
                           className="h-12"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}

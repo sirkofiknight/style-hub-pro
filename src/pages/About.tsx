@@ -13,22 +13,22 @@ const stats = [
 
 const team = [
   {
-    name: "Alessandro Rossi",
+    name: "Kofi Agyeman",
     role: "Master Tailor & Founder",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face",
-    bio: "With over 30 years of experience in bespoke tailoring, Alessandro founded Atelier with a vision to make luxury tailoring accessible.",
+    image: "https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=300&h=300&fit=crop&crop=face",
+    bio: "With over 25 years of experience in bespoke tailoring, Kofi founded Atelier with a vision to blend Ghanaian craftsmanship with modern elegance.",
   },
   {
-    name: "Sofia Chen",
+    name: "Abena Owusu",
     role: "Head of Design",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face",
-    bio: "Sofia brings contemporary flair to traditional craftsmanship, leading our design team with creativity and precision.",
+    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=300&fit=crop&crop=face",
+    bio: "Abena brings contemporary flair to traditional Ghanaian fabrics, leading our design team with creativity and cultural authenticity.",
   },
   {
-    name: "Marcus Williams",
+    name: "Yaw Boateng",
     role: "Client Relations Director",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
-    bio: "Marcus ensures every client receives personalized attention and exceptional service throughout their tailoring journey.",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face",
+    bio: "Yaw ensures every client receives personalized attention and exceptional service throughout their tailoring journey.",
   },
 ];
 
@@ -53,14 +53,15 @@ const About = () => {
                   A Legacy of <span className="text-gradient-gold">Craftsmanship</span>
                 </h1>
                 <p className="text-muted-foreground text-lg mb-8">
-                  Founded in 2009, Atelier began with a simple mission: to bring the art of bespoke 
-                  tailoring into the modern age. We combine time-honored techniques passed down 
-                  through generations with cutting-edge technology to deliver garments that are 
-                  truly one-of-a-kind.
+                  Founded in 2010, Atelier began with a simple mission: to celebrate Ghanaian 
+                  craftsmanship while bringing bespoke tailoring into the modern age. We combine 
+                  time-honored techniques passed down through generations with cutting-edge 
+                  technology to deliver garments that are truly one-of-a-kind.
                 </p>
                 <p className="text-muted-foreground text-lg">
-                  Today, we're proud to serve clients worldwide, from first-time suit buyers to 
-                  fashion industry veterans who appreciate the difference that true craftsmanship makes.
+                  Today, we are proud to serve clients across Ghana and beyond, from first-time 
+                  suit buyers to fashion industry veterans who appreciate the difference that 
+                  true African craftsmanship makes.
                 </p>
               </div>
               

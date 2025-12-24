@@ -123,7 +123,7 @@ const Register = () => {
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <Input
                     id="firstName"
-                    placeholder="John"
+                    placeholder="Kofi"
                     className="pl-10 h-12"
                     value={formData.firstName}
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
@@ -135,7 +135,7 @@ const Register = () => {
                 <Label htmlFor="lastName">Last Name</Label>
                 <Input
                   id="lastName"
-                  placeholder="Doe"
+                  placeholder="Mensah"
                   className="h-12"
                   value={formData.lastName}
                   onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
@@ -167,7 +167,7 @@ const Register = () => {
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="+1 (555) 123-4567"
+                  placeholder="+233 24 123 4567"
                   className="pl-10 h-12"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}

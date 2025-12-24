@@ -61,7 +61,7 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
           <div>
             <h4 className="font-display text-lg font-semibold mb-6">Services</h4>
             <ul className="space-y-3">
-              {["Custom Suits", "Wedding Attire", "Alterations", "Bespoke Dresses", "Traditional Wear"].map((item) => (
+              {["Custom Suits", "Wedding Attire", "Alterations", "Kente Designs", "Agbada & Kaftan"].map((item) => (
                 <li key={item}>
                   <span className="text-primary-foreground/70 text-sm">{item}</span>
                 </li>
@@ -76,16 +76,16 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                 <span className="text-primary-foreground/70 text-sm">
-                  123 Fashion Avenue, Design District, NY 10001
+                  15 Oxford Street, Osu, Accra, Ghana
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-accent shrink-0" />
-                <span className="text-primary-foreground/70 text-sm">+1 (555) 123-4567</span>
+                <span className="text-primary-foreground/70 text-sm">+233 30 277 8899</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-accent shrink-0" />
-                <span className="text-primary-foreground/70 text-sm">hello@atelier.com</span>
+                <span className="text-primary-foreground/70 text-sm">hello@atelier.com.gh</span>
               </li>
             </ul>
           </div>
