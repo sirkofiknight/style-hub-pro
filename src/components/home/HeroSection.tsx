@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import heroImage from "@/assets/hero-african-fashion.jpg";
 
 const HeroSection = () => {
   return (
@@ -68,8 +69,8 @@ const HeroSection = () => {
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary/40" />
               <img
-                src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=1000&auto=format&fit=crop"
-                alt="Elegant tailoring"
+                src={heroImage}
+                alt="Elegant Ghanaian tailoring"
                 className="w-full h-full object-cover"
               />
             </div>
