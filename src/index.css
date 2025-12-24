@@ -54,8 +54,8 @@
 
     /* Gradients */
     --gradient-gold: linear-gradient(135deg, hsl(38 70% 50%), hsl(38 80% 35%));
-    --gradient-hero: linear-gradient(180deg, hsl(40 33% 98%) 0%, hsl(40 25% 92%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(40 25% 97%) 0%, hsl(40 20% 94%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--secondary)) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%);
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(220 15% 20% / 0.05);
@@ -152,7 +152,7 @@
   }
 
   .bg-gradient-hero {
-    background: linear-gradient(180deg, hsl(40 33% 98%) 0%, hsl(40 25% 92%) 100%);
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--secondary)) 100%);
   }
 
   .shadow-gold {
